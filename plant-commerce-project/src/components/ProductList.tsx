@@ -381,7 +381,6 @@ const ProductList = () => {
                         <div className="product-title">{plant.name}</div>
                         <div className="product-title">{plant.description}</div>
                         <div className="product-price">{plant.cost}</div>
-                        {/*Similarly like the above plant.name show other details like description and cost*/}
                         <button
                           className="product-button"
                           onClick={() => handleAddToCart(plant)}
