@@ -29,8 +29,9 @@ const CartItem: React.FC<CartItemProps> = ({ onContinueShopping }) => {
   };
 
   const handleIncrement = (item: Item): void => {
+    const currentQuantity = item.quantity ?? 0;
     dispatch(
-      updateQuantity({ name: item.name, quantity: (item.quantity ?? 0) + 1 })
+      updateQuantity({ name: item.name, quantity: currentQuantity + 1 })
     );
   };
 
@@ -40,6 +41,8 @@ const CartItem: React.FC<CartItemProps> = ({ onContinueShopping }) => {
       dispatch(
         updateQuantity({ name: item.name, quantity: currentQuantity - 1 })
       );
+    } else {
+      handleRemove(item);
     }
   };
 
@@ -50,7 +53,8 @@ const CartItem: React.FC<CartItemProps> = ({ onContinueShopping }) => {
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item: Item): number => {
     const numericCost = parseFloat(item.cost.replace('$', ''));
-    return numericCost * (item.quantity ?? 1);
+    const currentQuantity = item.quantity ?? 1;
+    return numericCost * currentQuantity;
   };
 
   return (
