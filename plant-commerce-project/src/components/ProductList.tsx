@@ -6,7 +6,7 @@ import { addItem } from '../store/reducers/CartSlice';
 import { Item } from '../store/reducers/CartSlice';
 import '../styles/dist/css/ProductLists.css';
 
-interface PlantCategory {
+interface PlantArray {
   category: string;
   plants: Item[];
 }
@@ -18,7 +18,7 @@ const ProductList = () => {
   const [, setShowPlants] = useState(false);
   const [, setAddedToCart] = useState({});
 
-  const plantsArray: PlantCategory[] = [
+  const plantsArray: PlantArray[] = [
     {
       category: 'Air Purifying Plants',
       plants: [
