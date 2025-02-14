@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-// import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CartItem from './CartItem';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../store/reducers/CartSlice';
 import { Item } from '../store/reducers/CartSlice';
+import { RootState } from '../store';
+
 import '../styles/dist/css/ProductLists.css';
 
 interface PlantArray {
@@ -13,10 +14,11 @@ interface PlantArray {
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const [showCart, setShowCart] = useState(false);
 
+  const [showCart, setShowCart] = useState(false);
   const [, setShowPlants] = useState(false);
   const [, setAddedToCart] = useState({});
+  const cart = useSelector((state: RootState) => state.cart.items);
 
   const plantsArray: PlantArray[] = [
     {
@@ -284,6 +286,31 @@ const ProductList = () => {
     textDecoration: 'none',
   };
 
+  const styleB: React.CSSProperties = {
+    position: 'absolute',
+    top: '2.1rem',
+    right: '2.2rem',
+    color: 'white',
+    borderRadius: '50%',
+    padding: '0 5px',
+    fontSize: '1.8rem',
+  };
+
+  const styleC: React.CSSProperties = {
+    position: 'absolute',
+    top: '2.2rem',
+    right: '1.7rem',
+    color: 'white',
+    borderRadius: '50%',
+    padding: '0 8px',
+    fontSize: '1.5rem',
+  };
+
+  const getStyleForCartCount = (count: number) => {
+    if (count > 0 && count < 10) return styleB; // Style for 0 items
+    if (count >= 10) return styleC; // Style for count > 10
+  };
+
   const handleCartClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setShowCart(true); // Set showCart to true when cart icon is clicked
@@ -356,6 +383,11 @@ const ProductList = () => {
                     id="mainIconPathAttribute"
                   ></path>
                 </svg>
+                {cart.length > 0 && (
+                  <span style={getStyleForCartCount(cart.length)}>
+                    {cart.length}
+                  </span>
+                )}
               </h1>
             </a>
           </div>
